@@ -4,6 +4,7 @@ import json
 
 from flask import Flask, jsonify, abort, request
 
+from Utils import Utils
 from blueprints.assistant import AssistantAPI
 
 app = Flask(__name__)
