@@ -3,6 +3,7 @@ import argparse
 import json
 
 from flask import Flask, jsonify, abort, request
+from werkzeug.utils import redirect
 
 from Utils import Utils
 from blueprints.activities import ActivityAPI
@@ -16,9 +17,12 @@ from blueprints.weather import WeatherAPI
 
 app = Flask(__name__)
 
-@app.route('/all', methods=['GET'])
-def get_tasks():
-    return json.dumps({'tasks': ""})
+@app.before_request
+def before_request():
+    if not DEV_ENV and request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='API for Homevee')

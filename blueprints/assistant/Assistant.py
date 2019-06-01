@@ -7,4 +7,4 @@ class Assistant:
         return "Handling voice command..."
 
     def classify_voice_command(self, command):
-        return None
+        return "Classifying voice command..."
