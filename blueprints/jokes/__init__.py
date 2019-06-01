@@ -10,7 +10,7 @@ JokesAPI = Blueprint('JokesAPI', __name__, template_folder='templates')
 BASE_PATH = "/jokes/"
 
 @JokesAPI.route(BASE_PATH+'random', methods=['GET'])
-def get_random_joke(language):
+def get_random_joke():
     try:
         language = request.args.get("language")
         categories = request.args.get("categories")

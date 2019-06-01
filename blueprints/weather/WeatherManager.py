@@ -5,5 +5,5 @@ class WeatherManager:
     def get_weather(self, location):
         return {}
 
-    def get_cities(self, keyword):
+    def get_cities(self, keyword=None):
         return []
