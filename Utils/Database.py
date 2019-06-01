@@ -17,11 +17,8 @@ class Database():
         :return: the cursor after executing the query
         """
         mycursor = self.db.cursor()
-
         print(sql, params)
-
         mycursor.execute(sql, params)
-
         return mycursor
 
     def get_database_con(self):
@@ -29,13 +26,10 @@ class Database():
         Returns a connection to the database
         :return: the database connection
         """
-
         data = Utils.get_config_data()
-
         host = data['db_host']
         user = data['db_user']
         passwd = data['db_password']
         database = data['db_name']
-
         db = mysql.connector.connect(host=host, user=user, passwd=passwd, database=database)
         return db

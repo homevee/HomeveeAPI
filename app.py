@@ -6,6 +6,8 @@ from flask import Flask, jsonify, abort, request
 
 from Utils import Utils
 from blueprints.assistant import AssistantAPI
+from blueprints.jokes import JokesAPI
+from blueprints.tv import TVProgrammAPI
 
 app = Flask(__name__)
 
@@ -19,7 +21,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     DEV_ENV = args.dev
 
-    blueprints = [AssistantAPI]
+    blueprints = [AssistantAPI, JokesAPI, TVProgrammAPI]
 
     for blueprint in blueprints:
         app.register_blueprint(blueprint)
