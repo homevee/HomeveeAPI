@@ -3,4 +3,6 @@ class FoodManager:
         return
 
     def search_food(self, keyword):
-        return "food..."
+        db = Database()
+        id, language, joke = db.select_one("SELECT * FROM `JOKES` ORDER BY RAND() LIMIT 1;", ())
+        return {'joke': joke}

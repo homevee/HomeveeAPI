@@ -9,7 +9,7 @@ class Database():
             db = self.get_database_con()
         self.db = db
 
-    def do_query(self, sql: str, params: dict):
+    def do_query(self, sql: str, params: tuple):
         """
         Executes the given sql-statement and returns a pointer to the resulting cursor
         :param sql: the sql-statement as a string
@@ -20,6 +20,30 @@ class Database():
         print(sql, params)
         mycursor.execute(sql, params)
         return mycursor
+
+    def select_one(self, sql: str, params: tuple):
+        """
+        Selects a single result from the given query
+        :param sql: the sql query
+        :param params: the params
+        :return: the first found item
+        """
+        cursor = self.do_query(sql, params)
+        result = cursor.fetchone()
+        cursor.close()
+        return result
+
+    def select_all(self, sql: str, params: tuple):
+        """
+        Selects all results from the given query
+        :param sql: the sql query
+        :param params: the sql params
+        :return: all found items
+        """
+        cursor = self.do_query(sql, params)
+        results = cursor.fetchall()
+        cursor.close()
+        return results
 
     def get_database_con(self):
         """

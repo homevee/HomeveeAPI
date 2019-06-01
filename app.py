@@ -5,8 +5,10 @@ import json
 from flask import Flask, jsonify, abort, request
 
 from Utils import Utils
+from blueprints.activities import ActivityAPI
 from blueprints.assistant import AssistantAPI
 from blueprints.devices import DevicesAPI
+from blueprints.facts import FactAPI
 from blueprints.food import FoodAPI
 from blueprints.jokes import JokesAPI
 from blueprints.tv import TVProgrammAPI
@@ -24,7 +26,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     DEV_ENV = args.dev
 
-    blueprints = [AssistantAPI, JokesAPI, TVProgrammAPI, WeatherAPI, DevicesAPI, FoodAPI]
+    blueprints = [AssistantAPI, JokesAPI, TVProgrammAPI, WeatherAPI, DevicesAPI, FoodAPI, FactAPI, ActivityAPI]
 
     for blueprint in blueprints:
         app.register_blueprint(blueprint)
