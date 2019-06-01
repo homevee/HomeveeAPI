@@ -1,3 +1,6 @@
+from Utils.Database import Database
+
+
 class FoodManager:
     def __init__(self):
         return

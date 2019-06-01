@@ -3,7 +3,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as etree
 
-from blueprints.tv.CacheManager import CacheManager
+from Utils.CacheManager import CacheManager
 
 
 class TVProgrammManager():
@@ -11,7 +11,7 @@ class TVProgrammManager():
         return
 
     def get_tv_programm(self, type, use_cache=True):
-        data = CacheManager().get_cached_data(type)
+        data = CacheManager().read_cache("TV_PROGRAMM", type)
 
         if data is None:
             #if not use_cache:
@@ -25,7 +25,7 @@ class TVProgrammManager():
                 file = urllib.request.urlopen(link)
                 data = file.read()
                 file.close()
-                CacheManager().set_cache_data(type, data)
+                CacheManager().write_cache("TV_PROGRAMM", type, data)
             except:
                 return None
 
