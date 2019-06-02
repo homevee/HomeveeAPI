@@ -40,9 +40,11 @@ if __name__ == '__main__':
     else:
         HOST = "api.homevee.de"
 
-        CERT_FILE = "/etc/letsencrypt/live/"+HOST+"/cert.pem"
-        KEY_FILE = "/etc/letsencrypt/live/"+HOST+"/privkey.pem"
+        CERT_FILE = "/etc/letsencrypt/live/" + HOST + "/cert.pem"
+        CHAIN_FILE = "/etc/letsencrypt/live/" + HOST + "/chain.pem"
+        FULLCHAIN_FILE = "/etc/letsencrypt/live/" + HOST + "/fullchain.pem"
+        KEY_FILE = "/etc/letsencrypt/live/" + HOST + "/privkey.pem"
 
         app.config['SERVER_NAME'] = HOST
 
-        app.run(host=HOST, port=443, ssl_context=(CERT_FILE, KEY_FILE))
+        app.run(host=HOST, port=443, ssl_context=(FULLCHAIN_FILE, KEY_FILE))
