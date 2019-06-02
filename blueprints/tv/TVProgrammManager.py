@@ -1,3 +1,4 @@
+import json
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -10,8 +11,10 @@ class TVProgrammManager():
     def __init__(self):
         return
 
-    def get_tv_programm(self, type, use_cache=True):
+    def get_tv_programm(self, type):
         data = CacheManager().read_cache("TV_PROGRAMM", type)
+
+        print(data)
 
         if data is None:
             #if not use_cache:
@@ -43,29 +46,35 @@ class TVProgrammManager():
             description = item.find('description').text
 
             img = None
-            #if item.find('image') is not None:
-            img = item.find('enclosure').attrib['url']
+            if item.find('image') is not None:
+                img = item.find('image').attrib['url']
 
             tv_shows.append(TVItem(name, time, channel, img, description))
 
         return tv_shows
 
     def get_channels(self):
-        items = []
+        data = CacheManager().read_cache("TV_PROGRAMM", "channels", max_time=60*60*24)
+        if data is None:
+            items = []
 
-        types = ['jetzt', 'tipps', 'heute2015', 'heute2200']
+            types = ['jetzt', 'tipps', 'heute2015', 'heute2200']
 
-        for type in types:
-            data = self.get_tv_programm(type, use_cache=False)
+            for type in types:
+                data = self.get_tv_programm(type)
 
-            if data is not None:
-                items.extend(data)
+                if data is not None:
+                    items.extend(data)
 
-        channels = []
+            channels = []
 
-        for item in items:
-            if item.channel not in channels:
-                channels.append(item.channel)
+            for item in items:
+                if item.channel not in channels:
+                    channels.append(item.channel)
+
+            CacheManager().write_cache("TV_PROGRAMM", "channels", json.dumps(channels))
+        else:
+            channels = json.loads(data)
 
         return channels
 
