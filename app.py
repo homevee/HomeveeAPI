@@ -27,8 +27,14 @@ def before_request():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='API for Homevee')
     parser.add_argument('--dev', default=False, type=bool, help='Is the server in dev mode?')
+    parser.add_argument('--test', default=False, type=bool, help='Is the server in test mode?')
+    parser.add_argument('--domain', required=False, default="dev-test.homevee.de", type=str, help='The domain to run the api on')
     args = parser.parse_args()
+
     DEV_ENV = args.dev
+    TEST_ENV = args.test
+
+    HOST = args.domain
 
     blueprints = [AssistantAPI, JokesAPI, TVProgrammAPI, WeatherAPI, DevicesAPI, FoodAPI, FactAPI, ActivityAPI]
 
@@ -37,6 +43,15 @@ if __name__ == '__main__':
 
     if DEV_ENV:
         app.run(debug=True)
+    elif TEST_ENV:
+        HOST = "dev-test.homevee.de"
+
+        CERT_FILE = "/etc/letsencrypt/live/" + HOST + "/cert.pem"
+        CHAIN_FILE = "/etc/letsencrypt/live/" + HOST + "/chain.pem"
+        FULLCHAIN_FILE = "/etc/letsencrypt/live/" + HOST + "/fullchain.pem"
+        KEY_FILE = "/etc/letsencrypt/live/" + HOST + "/privkey.pem"
+
+        app.run(host=HOST, port=7778, ssl_context=(FULLCHAIN_FILE, KEY_FILE))
     else:
         HOST = "api.homevee.de"
 
