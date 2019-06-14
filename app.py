@@ -42,7 +42,7 @@ if __name__ == '__main__':
         app.register_blueprint(blueprint)
 
     if DEV_ENV:
-        app.run(debug=True)
+        app.run(debug=True, threaded=True)
     elif TEST_ENV:
         HOST = "dev-test.homevee.de"
 
@@ -51,7 +51,7 @@ if __name__ == '__main__':
         FULLCHAIN_FILE = "/etc/letsencrypt/live/" + HOST + "/fullchain.pem"
         KEY_FILE = "/etc/letsencrypt/live/" + HOST + "/privkey.pem"
 
-        app.run(host=HOST, port=7778, ssl_context=(FULLCHAIN_FILE, KEY_FILE))
+        app.run(host=HOST, port=7778, ssl_context=(FULLCHAIN_FILE, KEY_FILE), threaded=True)
     else:
         HOST = "api.homevee.de"
 
@@ -62,4 +62,4 @@ if __name__ == '__main__':
 
         app.config['SERVER_NAME'] = HOST
 
-        app.run(host=HOST, port=443, ssl_context=(FULLCHAIN_FILE, KEY_FILE))
+        app.run(host=HOST, port=443, ssl_context=(FULLCHAIN_FILE, KEY_FILE), threaded=True)
