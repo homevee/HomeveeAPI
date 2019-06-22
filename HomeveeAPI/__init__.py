@@ -1,8 +1,7 @@
 #!flask/bin/python
 import argparse
 
-from flask import Flask, request
-from werkzeug.utils import redirect
+from flask import Flask
 
 from HomeveeAPI.blueprints.activities import ActivityAPI
 from HomeveeAPI.blueprints.assistant import AssistantAPI
